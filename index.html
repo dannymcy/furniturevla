@@ -81,7 +81,7 @@
                       <sup>1</sup> Mitsubishi Electric Research Laboratories&emsp;
                       <sup>2</sup> University of Oxford&emsp;
                       <sup>3</sup> UNC Chapel Hill<br>
-                      <sup>†</sup> Corresponding author.
+                      <sup>†</sup> Corresponding author
                     </span>
                   </div>
                   <br>
@@ -164,10 +164,9 @@
           </video> -->
       <!-- </video> -->
       <h2 class="subtitle has-text-centered">
-        <b>TL;DR:</b> We introduce COOPERA, a framework for studying continual, open-ended human-robot collaboration. 
-        COOPERA includes (a) simulated humans driven by psychological traits and long-term intentions,
-        (b) continuous human feedback, 
-        and (c) a benchmark and approach to personalize the robot's collaborative actions.
+        <b>TL;DR:</b> We introduce FurnitureVLA, the first systematic study of real-scale bimanual furniture assembly with Vision-Language-Action models. 
+        It comprises (a) a scalable simulation pipeline for data generation and evaluation, (b) a tailored VR teleoperation system for high-quality real-world demonstration collection,
+        and (c) a progress-enhanced VLA to tackle long-horizon assembly.
       </h2>
     </div>
   </div>
@@ -203,15 +202,16 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            To understand and collaborate with humans, robots must account for individual human traits, habits, and activities over time. 
-            However, most robotic assistants lack these abilities, as they primarily focus on predefined tasks in structured environments and 
-            lack a human model to learn from. This work introduces <b>COOPERA</b>, a novel framework for <b>CO</b>ntinual, 
-            <b>OP</b>en-<b>E</b>nded human-<b>R</b>obot <b>A</b>ssistance, where simulated humans, driven by psychological traits 
-            and long-term intentions, interact with robots in complex environments. By integrating continuous human feedback, our framework, 
-            for the first time, enables the study of long-term, open-ended human-robot collaboration (HRC) in different collaborative tasks 
-            across various time-scales. Within COOPERA, we introduce a benchmark and an approach to personalize the robot's collaborative actions 
-            by learning human traits and context-dependent intents. Experiments validate the realism of our simulated humans and demonstrate the value 
-            of inferring and personalizing to human intents for open-ended and long-term HRC.          
+            Current work on robot furniture assembly mostly focuses on toy-scale settings or single-arm manipulation. 
+            We introduce <b>FurnitureVLA</b>, the first systematic study of real-scale bimanual furniture assembly using Vision-Language-Action models (VLAs). 
+            We formalize the task, develop a scalable simulation pipeline for expert data generation and evaluation, 
+            and build a VR teleoperation system for single-operator bimanual control to collect high-quality real-world demonstrations. 
+            To address extreme long-horizon assembly with up to 7 subtasks and 1550 control steps, we propose a progress-enhanced VLA, 
+            finetuned on semantically grounded subtasks, that jointly predicts actions and a continuous progress signal, 
+            enabling automatic subtask transitions and reducing compounding errors during inference. 
+            We further study perception and control design factors that critically affect precision in real-scale assembly. 
+            FurnitureVLA improves average simulation success from 48% to 80% compared to baselines across three furniture types, 
+            with an additional 21% gain from our design factor study. We validate on a real Kinova Gen3 platform with only 16% drop on the hardest task.    
           </p>
         </div>
       </div>
@@ -231,7 +231,7 @@
   <div class="hero-body">
     <div class="container">
       <!-- Paper video. -->
-      <h2 class="title is-3 has-text-centered">Framework Overview</h2>
+      <h2 class="title is-3 has-text-centered">Simulation Playground</h2>
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
 
@@ -239,15 +239,14 @@
             <!-- Youtube embed code here -->
             <!-- <iframe src="https://www.youtube.com/embed/JkaxUblCGz0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
            -->
-           <img src="static/images/framework.jpg" alt="Framework Overview"/>
+           <img src="static/images/simulation.jpg" alt="Simulation Playground"/>
 
            <div class="content has-text-justified">
              <p>
-              Our goal is to enable the study of continual HRC in open-ended tasks. 
-              To that end, we investigate how a robotic agent can become more effective in assisting humans by learning from their behavior. 
-              Central to COOPERA are LLM-powered simulated humans driven by traits and long-term intentions that the robot can reason for effective collaboration, 
-              and a human feedback mechanism for improving collaboration over time. 
-              COOPERA offers different collaborative tasks across various time-scales. 
+              We build a a scalable simulation pipeline for data generation and evaluation. 
+              These bimanual furniture assembly tasks tasks require executing diverse manipulation skills over extremely long horizons. 
+              A simple item (IKEA LACK side table) requires 12 skill executions (650 steps), 
+              while a complex assembly (IKEA IVAR chair) requires 25 (1550 steps).
              </p>
            </div>
           </div>
@@ -263,23 +262,29 @@
   <div class="hero-body">
     <div class="container">
       <!-- Paper video. -->
-      <h2 class="title is-3 has-text-centered">Simulating Humans</h2>
+      <h2 class="title is-3 has-text-centered">Real-World System</h2>
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
 
-          <!-- <div class="publication-video"> -->
-            <!-- Youtube embed code here -->
-            <!-- <iframe src="https://www.youtube.com/embed/JkaxUblCGz0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-           -->
-           <img src="static/images/human_simulation.jpg" alt="Human Simulation"/>
+          <!-- Row 1: system image + teleop video, equal height, together full width -->
+          <div style="display:flex; align-items:flex-start; gap:12px;">
+            <img src="static/images/system.jpg" alt="Real-World System"
+                 style="flex:1.59 1 0; width:0; min-width:0; height:auto; display:block; object-fit:contain;"/>
+            <video autoplay controls muted loop playsinline
+                   style="flex:1.78 1 0; width:0; min-width:0; height:auto; display:block; object-fit:contain;">
+              <source src="static/images/ivar_teleop%2010x.mp4" type="video/mp4">
+            </video>
+          </div>
+
+          <!-- Row 2: full-width teleop image -->
+          <img src="static/images/teleop.jpg" alt="VR Teleoperation"
+               style="width:100%; display:block; margin-top:12px;"/>
 
            <div class="content has-text-justified">
              <p>
-              We aim to model humans who interact in the environment over long periods of time, act driven by their goals, preferences, and context, 
-              and who can react and provide feedback as a robot assists them. To achieve this, 
-              we propose a hierarchical model that combines LLMs and 3D human motion to simulate long-term, 
-              realistic human behaviors in indoor environments.
-             </p>
+              To support real-world deployment, we develop a VR teleoperation system with design principles tailored for real-scale bimanual assembly, 
+              enabling a single operator to coordinate dual-arm Kinova Gen3 control for high-quality demonstration collection. Speed 10×
+             </p> 
            </div>
           </div>
         </div>
@@ -295,20 +300,20 @@
   <div class="hero-body">
     <div class="container">
       <!-- Paper video. -->
-      <h2 class="title is-3 has-text-centered">Instantiating COOPERA with an Assistive Agent</h2>
+      <h2 class="title is-3 has-text-centered">FurnitureVLA: Progress-Enhanced VLA</h2>
       <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
+        <div class="column is-three-fifths">
 
           <!-- <div class="publication-video"> -->
             <!-- Youtube embed code here -->
             <!-- <iframe src="https://www.youtube.com/embed/JkaxUblCGz0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
            -->
-           <img src="static/images/method.jpg" alt="Building an Assistive Agent"/>
+           <img src="static/images/furniturevla.jpg" alt="FurnitureVLA: Progress-Enhanced VLA"/>
 
            <div class="content has-text-justified">
              <p>
-              To study COOPERA, we propose an approach for continual HRC, alongside benchmark methods. Our approach enables the robot to improve its assistive performance by learning
-              correlations between human intentions, tasks, traits, and temporal dependencies at each time of day. 
+              We propose a progress-enhanced VLA finetuned on semantically grounded subtasks to mitigate distribution drift in long-horizon tasks, 
+              jointly predicting actions and a progress signal to trigger subtask transitions.
              </p>
            </div>
           </div>
@@ -318,10 +323,6 @@
   </div>
 </section>
 <!-- End youtube video -->
-
-
-
-
 
 
 
@@ -330,47 +331,89 @@
     <div class="container">
       <!-- Paper video. -->
       <h2 class="title is-3 has-text-centered">Qualitative Results</h2>
-      <div class="columns is-centered has-text-centered">
+      <div class="columns is-centered">
         <div class="column is-four-fifths">
 
           <!-- <div class="publication-video"> -->
             <!-- Youtube embed code here -->
             <!-- <iframe src="https://www.youtube.com/embed/JkaxUblCGz0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
            -->
-           <div class="content has-text-justified">
-             <!-- <p>
-              We provide an extensive empirical study combining multiple off-the-shelf and handcrafted
-              datasets, ranging from fundamental spatial questions regarding relative positions and orientations to providing fine-grained 3D information
-              on objects' locations, sizes, inclinations, and
-              dynamic changes, and plan for robotics tasks
-              with full 3D trajectories.
-             </p> -->
+           <div class="content">
 
-              <!-- Experiment 1. -->
-              <h2 class="title is-4">Simulated Humans</h2>
-                <!-- <p>
-                  We experiment on the basic form of spatial VQA introduced by SpatialVLM, Intra-Image Object Relations VQA (IaOR-VQA), 
-                  as well as two new forms introduced by us: Intra-Image Angular Discrepancies VQA (IaAD-VQA) and Inter-Image Spatial Dynamics VQA (IrSD-VQA).
+              <!-- ============ VLA Policy Rollouts ============ -->
+              <h2 class="title is-4 has-text-left">VLA Policy Rollouts</h2>
 
-                  <br><br>In the figure below, we list some sample question and answer pairs generated by our pipeline.
-                </p> -->
-              <div class="columns is-centered has-text-centered">
-                <div class="column is-four-fifths">
-                   <img src="static/images/human_demo.jpg" alt="Simulated Humans"  style="width: 100%; height: auto;" />
+              <!-- Intro text (edit me) -->
+              <p class="has-text-left">
+                We showcase VLA inference for long-horizon bimanual furniture assembly in simulation.
+              </p>
+
+              <!-- Row 1: three videos in ONE gray box -->
+              <div style="background:#f0f0f0; border-radius:12px; padding:16px; margin-bottom:16px;">
+                <div style="display:flex; gap:12px;">
+                  <div style="flex:1 1 0; min-width:0;">
+                    <p style="text-align:center; font-weight:600; margin-bottom:8px;">Assemble the LACK side table (Speed 10×)<br><span style="font-size:1.5em;">✅</span></p>
+                    <video controls autoplay muted loop playsinline style="width:100%; border-radius:6px; display:block;">
+                      <source src="static/images/eval_lack_sim%2010x.mp4" type="video/mp4">
+                    </video>
+                  </div>
+                  <div style="flex:1 1 0; min-width:0;">
+                    <p style="text-align:center; font-weight:600; margin-bottom:8px;">Assemble the KALLAX shelf (Speed 10×)<br><span style="font-size:1.5em;">✅</span></p>
+                    <video controls autoplay muted loop playsinline style="width:100%; border-radius:6px; display:block;">
+                      <source src="static/images/eval_kallax_sim%2010x.mp4" type="video/mp4">
+                    </video>
+                  </div>
+                  <div style="flex:1 1 0; min-width:0;">
+                    <p style="text-align:center; font-weight:600; margin-bottom:8px;">Assemble the IVAR chair (Speed 10×)<br><span style="font-size:1.5em;">✅</span></p>
+                    <video controls autoplay muted loop playsinline style="width:100%; border-radius:6px; display:block;">
+                      <source src="static/images/eval_ivar_sim%2010x.mp4" type="video/mp4">
+                    </video>
+                  </div>
                 </div>
               </div>
 
-              <!-- Experiment 2. -->
-              <h2 class="title is-4">Human-Robot Collaboration</h2>
-                <!-- <p>
-                  By partially reconstructing the 3D scene with visual alignments, our framework enables VLMs to use
-                  tools like rapidly-exploring random tree star (RRT*) to generate accurate, collision-free paths
-                  based on task specifications. Given a robot's egocentric observation of a scene with
-                  multiple objects, our pipeline uses traditional planning to solve robotics pick-and-stack.
-                </p> -->
-              <div class="columns is-centered has-text-centered">
-                <div class="column is-four-fifths">
-                   <img src="static/images/HRC.jpg" alt="Human-Robot Collaboration"/>
+              <!-- Text between rows (edit me) -->
+              <p class="has-text-left">
+                We showcase real-world VLA policy inference.
+              </p>
+
+              <!-- Row 2: one video in ONE gray box -->
+              <div style="background:#f0f0f0; border-radius:12px; padding:16px; margin-bottom:28px;">
+                <div style="display:flex; gap:12px;">
+                  <div style="flex:1 1 0; min-width:0;">
+                    <p style="text-align:center; font-weight:600; margin-bottom:8px;">Assemble the IVAR chair (Speed 20×)<br><span style="font-size:1.5em;">✅</span></p>
+                    <video controls autoplay muted loop playsinline style="width:100%; border-radius:6px; display:block;">
+                      <source src="static/images/demo%2020x.mp4" type="video/mp4">
+                    </video>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ============ VLA Emergent Corrective Behaviors ============ -->
+              <h2 class="title is-4 has-text-left">VLA Emergent Corrective Behaviors</h2>
+
+              <!-- Intro text (edit me) -->
+              <p class="has-text-left">
+                We also observe emergent corrective behaviors. In several rollouts, the robot self-corrects when parts are initially misaligned. 
+                For example, when grasping the seat panel with insufficient contact, the robot reopens the gripper, adjusts its pose, and regrasp for a more stable hold. 
+                During the attachment of the left chair frame, the robot performs small corrective motions to align the parts before insertion.
+              </p>
+
+              <!-- Row: two videos in ONE gray box -->
+              <div style="background:#f0f0f0; border-radius:12px; padding:16px; margin-bottom:16px;">
+                <div style="display:flex; gap:12px;">
+                  <div style="flex:1 1 0; min-width:0;">
+                    <p style="text-align:center; font-weight:600; margin-bottom:8px;">Seat panel regrasp (Speed 1.5×)<br><span style="font-size:1.5em;">✅</span></p>
+                    <video controls autoplay muted loop playsinline style="width:100%; border-radius:6px; display:block;">
+                      <source src="static/images/self_correct_2%201.5x.mp4" type="video/mp4">
+                    </video>
+                  </div>
+                  <div style="flex:1 1 0; min-width:0;">
+                    <p style="text-align:center; font-weight:600; margin-bottom:8px;">Left chair frame alignment (Speed 8×)<br><span style="font-size:1.5em;">✅</span></p>
+                    <video controls autoplay muted loop playsinline style="width:100%; border-radius:6px; display:block;">
+                      <source src="static/images/self_correct%208x.mp4" type="video/mp4">
+                    </video>
+                  </div>
                 </div>
               </div>
 
@@ -430,8 +473,8 @@
 
 <!--BibTex citation -->
   <section class="section" id="BibTeX"  style="margin-top: 25px; margin-bottom: 25px;">
-    <div class="container is-max-desktop content">
-      <h2 class="title">BibTeX</h2>
+    <div class="container is-max-desktop content has-text-left">
+      <h2 class="title has-text-left">BibTeX</h2>
       <!-- <pre><code>@inproceedings{ma2024COOPERA,
   title={COOPERA: Enhancing Spatial Reasoning Capabilities of Vision-Language Models through Prompting and Interacting 3D Priors},
   author={Ma, Chenyang and Lu, Kai and Cheng, Ta-Ying and Trigoni, Niki and Markham, Andrew},
